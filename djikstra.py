@@ -5,7 +5,13 @@ import heapq
 
 
 class GraphVisualizer:
-    def __init__(self, vertices_qty) -> None:
+    def __init__(self, vertices_qty: int) -> None:
+        """Create graph and visualize
+
+        args:
+            vertices_qty: int - number of vertices in graph
+
+        """
         self.vertices_qty = vertices_qty
         self._graph = None
         self.layout = None
@@ -21,6 +27,12 @@ class GraphVisualizer:
 
     @graph.setter
     def graph(self, adjacency_matrix: np.array) -> None:
+        """Creates graph and elements for visualization using Networkx library.
+
+        args:
+            adjacency_matrix: np.array - matrix to represent connections between nodes
+
+        """
         self._graph = nx.from_numpy_array(adjacency_matrix, create_using=nx.DiGraph)
         self.layout = nx.circular_layout(self._graph)
 
@@ -39,6 +51,11 @@ class GraphVisualizer:
         return dict_graph
 
     def lazy_dijkstras(self, root, visualize=True):
+        """Calculates distances from starting node to every possible node and visualizes it
+
+        root: int - index of starting node
+        visualize: bool - if true create popup for visualization
+        """
         distances = [np.Inf for _ in range(self.vertices_qty)]
         distances[root] = 0
         visited = [False for _ in range(self.vertices_qty)]
@@ -111,7 +128,7 @@ if __name__ == "__main__":
     # define constants
     VERTICES_QTY = 20
     chance_to_connect = 0.1
-    FRAME_TIME = 0.5
+    FRAME_TIME = 0.0001
 
     # create random adjacency matrix
     adjacency_matrix = (
